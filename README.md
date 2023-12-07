@@ -1,3 +1,5 @@
+# Threads Explorer
+
 ## AWS Amplify + Next.js starter
 
 This is a starter application for building fullstack apps with AWS Amplify. 

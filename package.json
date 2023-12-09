@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.470.0",
+    "@aws-sdk/client-lambda": "^3.470.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.470.0",
     "aws-amplify": "^6.0.3",
     "next": "13.5.4",
     "react": "^18",

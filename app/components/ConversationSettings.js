@@ -7,7 +7,9 @@ export const COLLECTIONS = [
     { "code": "spr", "name": "thread_details_s_p_r"}
 ];
 
-export const SUGGESTIONS = ["ABA", "Edison", "Princeton", "OT", "Speech", "IEP", "Dentist", "Diet", "Pediatrician",  "Apraxia", "Swimming", "Insurance", "Summer"];
+export const SUGGESTIONS = [
+    "music", "travel", "food", "technology", "sports", "books", "movies", "art", "nature", "science"
+];
 // export const LOGGING = process.env.LOGGING === 'true'; // set to true to enable logging
 export const LOGGING = true;
 export const FEATURED_THREADS_COUNT = 10;

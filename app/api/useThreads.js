@@ -1,4 +1,4 @@
-import { lambdaClient } from "../api/lambdaClient.js";
+import { lambdaClient } from "./lambdaClient.js";
 import { InvokeCommand } from "@aws-sdk/client-lambda";
 
 const COLLECTIONS = [

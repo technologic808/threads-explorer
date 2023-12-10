@@ -7,13 +7,13 @@ import { SUGGESTIONS } from './ConversationSettings'
 import { FEATURED_THREADS_COUNT, SKIP_THREADS_COUNT } from './ConversationSettings'
 import './ThreadsExplorer.css';
 
-const ThreadsExplorer = ({ threads }) => {
-
+const ThreadsExplorer = ({ threads, searchTerm }) => {
+    console.log('searchTerm', searchTerm)
     const LOGGING = true;
 
     if (!threads) return null;
 
-    const [searchTermDebounced, setSearchTermDebounced] = useState('');
+    const [searchTermDebounced, setSearchTermDebounced] = useState(searchTerm || '');
     const [displayThreads, setDisplayedThreads] = useState([]);
     const [displayedThreadCount, setDisplayedThreadCount] = useState(0);
 

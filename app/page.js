@@ -1,6 +1,6 @@
 import { fetchThreads } from './api/useThreads'
 import AppBar from './components/AppBar'
-import ThreadsExplorer from './components/ThreadsExplorer'
+import HomePage from './components/HomePage'
 import './home.css'
 
 export default async function Home() {
@@ -10,8 +10,8 @@ export default async function Home() {
   return <>
     <AppBar />
 
-    <div className='headline'>{threads.length} threads to explore</div >
+    <div className='headline'>{threads.length} threads to explore</div>
 
-    <ThreadsExplorer threads={threads}></ThreadsExplorer>
+    <HomePage threads={threads} />
   </>
 }          

@@ -37,6 +37,11 @@ const ThreadsExplorer = ({ threads, searchTerm }) => {
     // Call the function inside a useEffect hook that runs only once when the component is mounted
     useEffect(() => handleInitialPageLoad(), []);
 
+    useEffect(() => {
+        setSearchTermDebounced(searchTerm)
+        updateTextField(searchTerm)
+    }, [searchTerm])
+
     // Copy the URL to the clipboard
     const copyToClipboard = () => {
         navigator && navigator.clipboard && navigator.clipboard.writeText(window.location.href)

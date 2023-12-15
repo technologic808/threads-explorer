@@ -43,20 +43,23 @@ const WordCloud = ({ words, handleWordClick }) => {
     // Define font scale
     const fontScale = scaleLinear({
         domain: [Math.min(...wordCloudData.map(d => d.value)), Math.max(...wordCloudData.map(d => d.value))],
-        range: [10, 50],
+        range: [15, 50],
     });
+
+    const fixedValueGenerator = () => 0.5;
 
     // Renders the word cloud
     return (
         <div className="word-cloud-container">
             <Wordcloud
                 words={wordCloudData}
-                width={window.innerWidth}
-                height={500}
+                width={window.innerWidth * 0.9}
+                height={300}
                 font={wordCloudOptions.fontFamily}
                 fontSize={d => fontScale(d.value)}
                 padding={wordCloudOptions.padding}
                 rotate={0}
+                random={fixedValueGenerator}
             >
                 {words => words.map((word, index) => (
                     <Text

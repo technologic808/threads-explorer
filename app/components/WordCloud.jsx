@@ -1,8 +1,15 @@
 import React from 'react';
-import ReactWordcloud from 'react-wordcloud';
 import '@fontsource/roboto/500.css';
+import { Wordcloud } from '@visx/wordcloud';
+import { scaleLinear } from '@visx/scale';
+import { Text } from '@visx/text';
 
 const WordCloud = ({ words, handleWordClick }) => {
+
+    console.log('wordExample', words[0])
+
+    // remove undefined/null from words
+    words = words.filter(word => word !== undefined && word !== null && word !== '')
 
     //  Configures the Word cloud 
     const wordCloudOptions = {
@@ -20,6 +27,8 @@ const WordCloud = ({ words, handleWordClick }) => {
         randomSeed: 420,
     };
 
+    const colors = ['#143059', '#2F6B9A', '#82a6c2'];
+
     // Converts an array of words into a word cloud data structure
     const generateWordCloudData = (words) => {
         const wordCloudMap = new Map();
@@ -29,19 +38,41 @@ const WordCloud = ({ words, handleWordClick }) => {
     };
 
     // Generates word cloud data
-    const wordCloudData = words.length > 0 ? generateWordCloudData(words) : null;
+    const wordCloudData = words.length > 0 ? generateWordCloudData(words) : [];
+
+    // Define font scale
+    const fontScale = scaleLinear({
+        domain: [Math.min(...wordCloudData.map(d => d.value)), Math.max(...wordCloudData.map(d => d.value))],
+        range: [10, 50],
+    });
 
     // Renders the word cloud
     return (
         <div className="word-cloud-container">
-            <ReactWordcloud
-                className="word-cloud"
+            <Wordcloud
                 words={wordCloudData}
-                options={wordCloudOptions}
-                callbacks={{
-                    onWordClick: handleWordClick,
-                }}
-            />
+                width={window.innerWidth}
+                height={500}
+                font={wordCloudOptions.fontFamily}
+                fontSize={d => fontScale(d.value)}
+                padding={wordCloudOptions.padding}
+                rotate={0}
+            >
+                {words => words.map((word, index) => (
+                    <Text
+                        key={index}
+                        fontFamily={wordCloudOptions.fontFamily}
+                        fontSize={fontScale(word.value)}
+                        fontWeight={wordCloudOptions.fontWeight}
+                        fill={colors[index % colors.length]}
+                        textAnchor="middle"
+                        transform={`translate(${word.x}, ${word.y})rotate(${word.rotate})`}
+                        onClick={() => handleWordClick(word)}
+                    >
+                        {word.text}
+                    </Text>
+                ))}
+            </Wordcloud>
         </div>
     );
 };

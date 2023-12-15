@@ -8,7 +8,7 @@ export default function HomePage({ threads }) {
     const [searchTerm, setSearchTerm] = useState('');
 
     return <>
-        {/* <TopicsWordCloud threads={threads} setSearchTerm={setSearchTerm} /> */}
+        <TopicsWordCloud threads={threads} setSearchTerm={setSearchTerm} />
         <ThreadsExplorer threads={threads} searchTerm={searchTerm}></ThreadsExplorer>
     </>
 }

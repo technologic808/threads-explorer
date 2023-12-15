@@ -1,13 +1,11 @@
 'use client'
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '@fontsource/roboto/500.css';
 import { Wordcloud } from '@visx/wordcloud';
 import { scaleLinear } from '@visx/scale';
 import { Text } from '@visx/text';
 
 const WordCloud = ({ words, handleWordClick }) => {
-
-    console.log('wordExample', words[0])
 
     // remove undefined/null from words
     words = words.filter(word => word !== undefined && word !== null && word !== '')
@@ -48,13 +46,18 @@ const WordCloud = ({ words, handleWordClick }) => {
     });
 
     const fixedValueGenerator = () => 0.5;
+    const [width, setWidth] = useState(0);
+
+    useEffect(() => {
+        setWidth(window.innerWidth * 0.9);
+    }, []);
 
     // Renders the word cloud
     return (
         <div className="word-cloud-container">
             <Wordcloud
                 words={wordCloudData}
-                width={window.innerWidth * 0.9}
+                width={width}
                 height={300}
                 font={wordCloudOptions.fontFamily}
                 fontSize={d => fontScale(d.value)}

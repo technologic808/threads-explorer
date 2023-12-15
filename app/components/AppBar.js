@@ -18,6 +18,8 @@ import ListItemText from '@mui/material/ListItemText';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Divider from '@mui/material/Divider';
+import { Add } from '@mui/icons-material';
+import Link from 'next/link';
 
 export default function SearchAppBar() {
 
@@ -50,12 +52,24 @@ export default function SearchAppBar() {
                     </ListItemButton>
                 </ListItem>
                 <ListItem key={'ThreadsExplorer'} disablePadding>
+                    <Link href="/">
                     <ListItemButton>
                         <ListItemIcon>
                             <ExploreIcon />
                         </ListItemIcon>
                         <ListItemText primary={'Threads Explorer'} />
-                    </ListItemButton>
+                        </ListItemButton>
+                    </Link>
+                </ListItem>
+                <ListItem key={'Create'} disablePadding onClick={() => console.log('+')}>
+                    <Link href="/create">
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <Add />
+                            </ListItemIcon>
+                            <ListItemText primary={'Create'} />
+                        </ListItemButton>
+                    </Link>
                 </ListItem>
             </List>
             <Divider />

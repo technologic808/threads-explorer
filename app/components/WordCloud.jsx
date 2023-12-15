@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import '@fontsource/roboto/500.css';
 import { Wordcloud } from '@visx/wordcloud';

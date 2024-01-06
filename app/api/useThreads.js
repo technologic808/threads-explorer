@@ -14,7 +14,13 @@ const COLLECTIONS = [
 
 async function fetchThreads(collectionCode) {
     const collection = COLLECTIONS.find(c => c.code === collectionCode);
-    const functionName = collection.name.startsWith('azure') ? 'readThreadsAzure' : 'threadsDocumentDbQuery';
+    if (typeof collection === 'undefined' || collection === null) {
+        return [];
+    }
+    if (typeof collectionCode === 'undefined' || collectionCode === null) {
+        return [];
+    }
+    const functionName = collectionCode.startsWith('azure') ? 'readThreadsAzure' : 'threadsDocumentDbQuery';
 
     const params = {
         FunctionName: functionName,

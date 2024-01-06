@@ -7,13 +7,17 @@ const COLLECTIONS = [
     { "code": "wdsnd", "name": "thread_details_desi_special_needs_dads_4k_1106_full" },
     { "code": "wennp", "name": "thread_details_edison_n_nearby_parents_4k_1106_full" },
     { "code": "wndaa", "name": "thread_details_nj_desi_all_ages_4k_1106_full" },
-    { "code": "spr", "name": "thread_details_s_p_r" }
+    { "code": "spr", "name": "thread_details_s_p_r" },
+    { "code": "azure_wdsng", "name": "thread_details_chattrapati@gmail.com_Desi special needs group_323" },
+    { "code": "azure_spr", "name": "thread_details_admin@explorethreads.com_SavingPrivateRansingh_781" },
 ];
 
 async function fetchThreads(collectionCode) {
     const collection = COLLECTIONS.find(c => c.code === collectionCode);
+    const functionName = collection.name.startsWith('azure') ? 'readThreadsAzure' : 'threadsDocumentDbQuery';
+
     const params = {
-        FunctionName: "threadsDocumentDbQuery",
+        FunctionName: functionName,
         Payload: JSON.stringify({
             "readRequest": {
                 "collectionName": collection.name

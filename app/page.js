@@ -4,7 +4,7 @@ import './home.css'
 
 export default async function Home() {
 
-  const threads = await fetchThreads("spr")
+  const threads = await fetchThreads("azure_spr")
 
   return <>
     <div className='headline'>{threads.length} threads to explore</div>

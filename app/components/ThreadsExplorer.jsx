@@ -59,7 +59,8 @@ const ThreadsExplorer = ({ threads, searchTerm }) => {
 
         // Filter threads based on title
         const titleMatches = threads.filter(thread => {
-            if (!thread.isValid) return false;
+            // XXX add it back when the validation pipeline is in place.
+            // if (!thread.isValid) return false;
 
             const lowerCaseTitle = (thread.title || '').toLowerCase();
             const titleMatches = lowerCaseTitle.includes(lowerCaseSearchTerm);
@@ -69,7 +70,8 @@ const ThreadsExplorer = ({ threads, searchTerm }) => {
 
         // Filter threads based on messages
         const messageMatches = threads.filter(thread => {
-            if (!thread.isValid) return false;
+            // XXX add it back when the validation pipeline is in place.
+            // if (!thread.isValid) return false;
 
             const lowerCaseTitle = (thread.title || '').toLowerCase();
             const titleMatches = lowerCaseTitle.includes(lowerCaseSearchTerm);
@@ -82,7 +84,8 @@ const ThreadsExplorer = ({ threads, searchTerm }) => {
 
         // Filter threads based on topic
         const topicMatches = threads.filter(thread => {
-            if (!thread.isValid) return false;
+            // XXX add it back when the validation pipeline is in place.
+            // if (!thread.isValid) return false;
 
             const lowerCaseTopic = (thread.topic || '').toLowerCase();
             const topicMatches = lowerCaseTopic.includes(lowerCaseSearchTerm);
@@ -92,7 +95,8 @@ const ThreadsExplorer = ({ threads, searchTerm }) => {
 
         // Filter threads based on subtopic
         const subtopicMatches = threads.filter(thread => {
-            if (!thread.isValid) return false;
+            // XXX add it back when the validation pipeline is in place.
+            // if (!thread.isValid) return false;
 
             const lowerCaseSubtopic = (thread.subtopic || '').toLowerCase();
             const subtopicMatches = lowerCaseSubtopic.includes(lowerCaseSearchTerm);

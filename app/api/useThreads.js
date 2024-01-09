@@ -12,21 +12,18 @@ const COLLECTIONS = [
     { "code": "azure_spr", "name": "thread_details_admin@explorethreads.com_SavingPrivateRansingh_781" },
 ];
 
-async function fetchThreads(collectionCode) {
-    const collection = COLLECTIONS.find(c => c.code === collectionCode);
-    if (typeof collection === 'undefined' || collection === null) {
-        return [];
-    }
-    if (typeof collectionCode === 'undefined' || collectionCode === null) {
-        return [];
-    }
-    const functionName = collectionCode.startsWith('azure') ? 'readThreadsAzure' : 'threadsDocumentDbQuery';
+async function fetchThreads(collectionNameUrl) {
+    // Commented function name is to read threads in aws documentDb.
+    // const functionName = 'threadsDocumentDbQuery';
+    const functionName = 'readThreadsAzure';
+    const decoded_collection_name = decodeURIComponent(collectionNameUrl).trim();
 
+    console.log("Fetching threads for collection : ", decoded_collection_name);
     const params = {
         FunctionName: functionName,
         Payload: JSON.stringify({
             "readRequest": {
-                "collectionName": collection.name
+                "collectionName": decoded_collection_name
             }
         }),
     };

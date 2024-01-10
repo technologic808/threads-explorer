@@ -18,10 +18,13 @@ import ListItemText from '@mui/material/ListItemText';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Divider from '@mui/material/Divider';
-import { Add } from '@mui/icons-material';
+import { Add, Group } from '@mui/icons-material';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation'
 
 export default function SearchAppBar() {
+    const pathname = usePathname()
+    const id = pathname.split('/')[2]
 
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -36,23 +39,17 @@ export default function SearchAppBar() {
             onClick={() => toggleDrawer(false)}
             onKeyDown={() => toggleDrawer(false)}
         >
+            <Link href={`/`}>
             <ListItem key={'Title'} disablePadding>
                 <ListItemButton>
                     <ListItemText primary={'Explore Threads'} />
                 </ListItemButton>
             </ListItem>
+            </Link>
             <Divider />
             <List>
-                <ListItem key={'WordCloud'} disablePadding>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            <CloudIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={'Word Cloud'} />
-                    </ListItemButton>
-                </ListItem>
                 <ListItem key={'ThreadsExplorer'} disablePadding>
-                    <Link href="/">
+                    <Link href={`/group/${id}`}>
                     <ListItemButton>
                         <ListItemIcon>
                             <ExploreIcon />
@@ -61,13 +58,13 @@ export default function SearchAppBar() {
                         </ListItemButton>
                     </Link>
                 </ListItem>
-                <ListItem key={'Create'} disablePadding onClick={() => console.log('+')}>
-                    <Link href="/create">
+                <ListItem key={'Users Dashboard'} disablePadding onClick={() => console.log('+')}>
+                    <Link href={`/usersDashboard/${id}`}>
                         <ListItemButton>
                             <ListItemIcon>
-                                <Add />
+                                <Group />
                             </ListItemIcon>
-                            <ListItemText primary={'Create'} />
+                            <ListItemText primary={'Users Dashboard'} />
                         </ListItemButton>
                     </Link>
                 </ListItem>

@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import CloudIcon from '@mui/icons-material/Cloud';
 import ExploreIcon from '@mui/icons-material/Explore';
 import Divider from '@mui/material/Divider';
-import { Add, Group } from '@mui/icons-material';
+import { Add, BarChart, Group } from '@mui/icons-material';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'
 
@@ -59,12 +59,12 @@ export default function SearchAppBar() {
                     </Link>
                 </ListItem>
                 <ListItem key={'Users Dashboard'} disablePadding onClick={() => console.log('+')}>
-                    <Link href={`/usersDashboard/${id}`}>
+                    <Link href={`/stats/${id}`}>
                         <ListItemButton>
                             <ListItemIcon>
-                                <Group />
+                                <BarChart />
                             </ListItemIcon>
-                            <ListItemText primary={'Users Dashboard'} />
+                            <ListItemText primary={'Group Analytics'} />
                         </ListItemButton>
                     </Link>
                 </ListItem>

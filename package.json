@@ -17,6 +17,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
+    "@mui/x-charts": "^6.18.7",
     "@visx/scale": "^3.5.0",
     "@visx/text": "^3.3.0",
     "@visx/wordcloud": "^3.3.0",

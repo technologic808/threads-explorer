@@ -10,7 +10,8 @@ async function fetchUserDashboard(collectionNameUrl) {
         FunctionName: functionName,
         Payload: JSON.stringify({
             "readRequest": {
-                "groupName": "SavingPrivateRansingh" // TODO: Replace with decoded_collection_name once pipeline is fixed
+                "groupName": decoded_collection_name
+                // "groupName": "SavingPrivateRansingh" // TODO: Replace with decoded_collection_name once pipeline is fixed
             }
         }),
     };

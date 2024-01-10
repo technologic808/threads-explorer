@@ -64,7 +64,7 @@ export default function SearchAppBar() {
                             <ListItemIcon>
                                 <BarChart />
                             </ListItemIcon>
-                            <ListItemText primary={'Group Analytics'} />
+                            <ListItemText primary={'Stats Explorer'} />
                         </ListItemButton>
                     </Link>
                 </ListItem>

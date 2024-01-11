@@ -4,7 +4,7 @@
 }
 
 .form-element{
-    padding: 20px;
+    padding: 20px !important;
 }
 
 .submit-button{

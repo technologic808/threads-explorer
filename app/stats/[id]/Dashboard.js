@@ -216,21 +216,23 @@ const getInitials = (name) => {
 };
 
 
-function UserCards({ data, aggregateData }) {
+function UserCards({ data: users, aggregateData }) {
 
     // calculate number of days between earliest first message and latest last message among all users
     // iterate between the dates of all users to find the earliest and latest date
-    const firstMessageDate = new Date(data.reduce((acc, curr) => acc < curr.firstMessageDate ? acc : curr.firstMessageDate, data[0].firstMessageDate));
-    const lastMessageDate = new Date(data.reduce((acc, curr) => acc > curr.lastMessageDate ? acc : curr.lastMessageDate, data[0].lastMessageDate));
+    const firstMessageDate = new Date(users.reduce((acc, curr) => acc < curr.firstMessageDate ? acc : curr.firstMessageDate, users[0].firstMessageDate));
+    const lastMessageDate = new Date(users.reduce((acc, curr) => acc > curr.lastMessageDate ? acc : curr.lastMessageDate, users[0].lastMessageDate));
     const daysBetween = Math.ceil((lastMessageDate - firstMessageDate) / (1000 * 60 * 60 * 24));
     aggregateData.daysBetween = daysBetween;
 
+    // sort users array by total messages sent
+    users.sort((a, b) => b.totalMessages - a.totalMessages);
 
     return (
         <div style={{ backgroundColor: "lightseagreen" }}>
             <Typography variant='h1' style={{ padding: "30px" }}>🃏 User Cards</Typography>
 
-            {data.map((user) => {
+            {users.map((user) => {
                 const firstMessageDate = new Date(user.firstMessageDate).toLocaleString("en-US", {
                     year: "numeric",
                     month: "long",

@@ -5,22 +5,6 @@ import './dashboard.css'
 
 function Dashboard({ dashboardData }) {
 
-    const getRandomColor = () => {
-        const colorPalette = [
-            '#4e79a7',
-            '#f28e2c',
-            '#e15759',
-            '#76b7b2',
-            '#59a14f',
-            '#edc949',
-            '#af7aa1',
-            '#ff9da7',
-            '#9c755f',
-            '#bab0ab',
-        ];
-        return colorPalette[Math.floor(Math.random() * colorPalette.length)];
-    };
-
     const valueFormatter = (value) => `${value}`;
 
     const chartSetting = {
@@ -37,32 +21,36 @@ function Dashboard({ dashboardData }) {
     const chartsData = [{
         label: 'Total Messages',
         data: totalMessagesData,
-        emoji: "📨"
+        emoji: "📨",
+        color: '#4e79a7'
     },
     {
         label: 'Average Message Length',
         data: averageMessageLengthData,
-        emoji: "📏"
+        emoji: "📏",
+        color: '#f28e2c'
     },
     {
         label: 'Longest Message',
         data: longestMessageData,
-        emoji: "📜"
+        emoji: "📜",
+        color: '#e15759'
     },
     {
         label: 'Active Days',
         data: activeDaysData,
-        emoji: "📅"
+        emoji: "📅",
+        color: '#76b7b2'
     }];
 
     // Helper function to render BarCharts
-    const renderBarChart = (data, title, emoji) => (
+    const renderBarChart = (data, title, emoji, color) => (
         <div style={{ padding: "20px" }}>
             <Typography variant='h2' style={{ "margin": "20px" }}>{emoji} {title}</Typography>
             <BarChart
                 dataset={data}
                 xAxis={[{ scaleType: 'band', dataKey: 'label' }]}
-                series={[{ dataKey: 'value', label: title, valueFormatter, color: getRandomColor() }]}
+                series={[{ dataKey: 'value', label: title, valueFormatter, color: color }]}
                 slotProps={{
                     legend: {
                         direction: 'row',
@@ -75,7 +63,7 @@ function Dashboard({ dashboardData }) {
         </div>
     );
 
-    const renderCharts = () => chartsData.map(chart => renderBarChart(chart.data, chart.label, chart.emoji));
+    const renderCharts = () => chartsData.map(chart => renderBarChart(chart.data, chart.label, chart.emoji, chart.color));
 
 
     return (

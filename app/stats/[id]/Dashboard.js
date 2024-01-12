@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Container } from "@mui/material";
+import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
 import { Box, ThemeProvider, createTheme } from '@mui/system';
 import './dashboard.css'
@@ -56,7 +56,9 @@ function UserProfileCard({ user, aggregateData }) {
                     boxShadow: 1,
                     borderRadius: 2,
                     p: 2,
-                    minWidth: 300,
+                    minWidth: '90vw',
+                    marginLeft: '20px',
+                    marginRight: '20px',
                 }}
             >
                 <Box sx={{ color: 'text.secondary' }}>{user.name}</Box>
@@ -248,10 +250,16 @@ function UserCards({ data: users, aggregateData }) {
                     minute: "numeric",
                 });
                 return (
-                    <Card elevation={10} variant="outlined" style={{ "margin": "10px", backgroundColor: "yellow" }} key={user.name} className="">
-                        <CardContent>
+                    <Accordion elevation={10} variant="outlined" style={{ "margin": "10px", backgroundColor: "yellow" }} key={user.name} className="">
 
+
+                        <AccordionSummary>
                             <UserProfileCard user={user} aggregateData={aggregateData} />
+
+                        </AccordionSummary>
+                        <AccordionDetails>
+
+
                             <List className="">
                                 <ListItem>
                                     <ListItemIcon><ChildFriendly /></ListItemIcon>
@@ -278,8 +286,10 @@ function UserCards({ data: users, aggregateData }) {
                                     <ListItemText primary={`Active Days: ${user.activeDays}`} />
                                 </ListItem>
                             </List>
-                        </CardContent>
-                    </Card>
+                        </AccordionDetails>
+
+
+                    </Accordion>
                 )
             })}
         </div>

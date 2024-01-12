@@ -56,7 +56,7 @@ function UserProfileCard({ user, aggregateData }) {
                     boxShadow: 1,
                     borderRadius: 2,
                     p: 2,
-                    minWidth: '90vw',
+                    minWidth: '95vw',
                     marginLeft: '20px',
                     marginRight: '20px',
                 }}

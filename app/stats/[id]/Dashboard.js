@@ -1,11 +1,12 @@
 'use client'
-import { Typography, Avatar } from "@mui/material";
+import { Typography, Avatar, Fab, Zoom } from "@mui/material";
+import { useEffect, useState } from "react";
 import { BarChart } from "@mui/x-charts";
 import { green, blue, orange, yellow, pink } from '@mui/material/colors';
 import { Box, ThemeProvider } from '@mui/system';
 import { createTheme } from "@mui/material/styles";
 import './dashboard.css';
-import { Calculate, ChildFriendly, Elderly, EventAvailable, Functions, SquareFoot } from "@mui/icons-material";
+import { Calculate, ChildFriendly, Elderly, EventAvailable, Functions, SquareFoot, Navigation, KeyboardArrowUp } from "@mui/icons-material";
 import useEmoji from '../../hooks/useEmoji';
 
 const theme = createTheme({
@@ -226,6 +227,43 @@ function UserProfileCard({ user, aggregateData }) {
     );
 }
 
+const ScrollTop = () => {
+    const [isVisible, setIsVisible] = useState(false);
+
+    const handleClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        const toggleVisibility = () => {
+            if (window.pageYOffset > window.innerHeight) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener('scroll', toggleVisibility);
+
+        return () => window.removeEventListener('scroll', toggleVisibility);
+    }, []);
+
+    return (
+        (
+            <Zoom
+                in={isVisible}
+                timeout={500}
+                style={{ transitionDelay: isVisible ? '500ms' : '0ms' }}
+                unmountOnExit
+            >
+                <Fab variant="extended" className="fab" color="primary" aria-label="scroll back to top" onClick={handleClick}>
+                    <KeyboardArrowUp sx={{ mr: 1 }} /> Scroll to Top
+                </Fab>
+            </Zoom>
+        )
+    );
+};
+
 function Dashboard({ dashboardData }) {
 
     const valueFormatter = (value) => `${value}`;
@@ -309,12 +347,17 @@ function Dashboard({ dashboardData }) {
 
     const renderCharts = () => chartsData.map(chart => renderBarChart(chart.data.slice(0, 5), chart.label, chart.emoji, chart.color));
 
+    const handleClick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <div className="stats-section">
             <Typography variant='h2' className="stats-header">🔍 Stats Explorer</Typography>
             <GroupCard aggregateData={aggregateData} />
             {renderCharts()}
             <UserCards data={userData} aggregateData={aggregateData} />
+            <ScrollTop />
         </div>
     );
 }

@@ -20,8 +20,14 @@
 
 /* .MuiAccordionSummary-root.Mui-expanded */
 
-@media screen and (max-width: 600px) {
+@media screen and (min-width: 600px) {
     .container {
-      flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-  }
+}
+
+.container{
+    padding-bottom: 0px !important;
+}

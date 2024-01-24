@@ -75,8 +75,8 @@ export default function SearchAppBar() {
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box sx={{ flexGrow: 1, pt: 8 }}>
+            <AppBar position="fixed">
                 <Toolbar>
                     <IconButton
                         onClick={() => toggleDrawer(true)}

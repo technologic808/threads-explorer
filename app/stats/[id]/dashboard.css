@@ -1,0 +1,18 @@
+.user-card {
+   margin: 20px ;
+}
+
+.user-section{
+    background-color: #f5f5f5;
+}
+
+.stats-header{
+    background-color: #e9ff98;
+    margin: 20px;
+}
+
+.stats-section{
+    background-color: #f5f5f5;
+}
+
+/* .MuiAccordionSummary-root.Mui-expanded */

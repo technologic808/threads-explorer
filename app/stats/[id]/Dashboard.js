@@ -2,7 +2,7 @@
 import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
 import { Box, ThemeProvider, createTheme } from '@mui/system';
-import './dashboard.css'
+import './dashboard.css';
 import { Calculate, ChildFriendly, Elderly, EventAvailable, Functions, SquareFoot } from "@mui/icons-material";
 
 const theme = createTheme({
@@ -27,6 +27,21 @@ const theme = createTheme({
 });
 
 function UserProfileCard({ user, aggregateData }) {
+
+    const firstMessageDate = new Date(user.firstMessageDate).toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+    const lastMessageDate = new Date(user.lastMessageDate).toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
     // Calculate percentage differences
     const percentTotalMessages = (user.totalMessages / aggregateData.totalMessages) * 100;
 
@@ -51,6 +66,7 @@ function UserProfileCard({ user, aggregateData }) {
     return (
         <ThemeProvider theme={theme}>
             <Box
+                className="user-card"
                 sx={{
                     bgcolor: 'background.paper',
                     boxShadow: 1,
@@ -94,7 +110,20 @@ function UserProfileCard({ user, aggregateData }) {
                 >
                     {describeUserActivity(user.activeDays, aggregateData.daysBetween)}
                 </Box>
+                <Box
+                    sx={{ color: 'text.secondary', display: 'inline', fontSize: 12 }}
+                >
+                    <p><ChildFriendly />{`  >  `}{`First Message: ${firstMessageDate}`}</p>
+                    <p><Elderly />{`  >  `}{`Last Message: ${lastMessageDate}`}</p>
+                    <p><Functions />{`  >  `}{`Total Messages: ${user.totalMessages}`}</p>
+                    <p><Calculate />{`  >  `}{`Average Message Length: ${user.avgMessageLength}`}</p>
+                    <p><SquareFoot />{`  >  `}{`Longest Message: ${user.longestMessage}`}</p>
+                    <p><EventAvailable />{`  >  `}{`Active Days: ${user.activeDays}`}</p>
+                </Box>
+
+
             </Box>
+
         </ThemeProvider>
     );
 }
@@ -171,11 +200,11 @@ function Dashboard({ dashboardData }) {
     const renderCharts = () => chartsData.map(chart => renderBarChart(chart.data.slice(0, 5), chart.label, chart.emoji, chart.color));
 
     return (
-        <>
-            <Typography variant='h1' style={{ "margin": "20px", background: "yellow" }}>Stats Explorer</Typography>
+        <div className="stats-section">
+            <Typography variant='h1' className="stats-header">Stats Explorer</Typography>
             {renderCharts()}
             <UserCards data={transformData(dashboardData)} aggregateData={aggregateData} />
-        </>
+        </div>
     );
 }
 
@@ -232,65 +261,13 @@ function UserCards({ data: users, aggregateData }) {
     users = users.slice(0, 10);
 
     return (
-        <div style={{ backgroundColor: "lightseagreen" }}>
+        <div className="user-section">
             <Typography variant='h1' style={{ padding: "30px" }}>🃏 User Cards</Typography>
 
             {users.map((user) => {
-                const firstMessageDate = new Date(user.firstMessageDate).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                });
-                const lastMessageDate = new Date(user.lastMessageDate).toLocaleString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                });
+
                 return (
-                    <Accordion elevation={10} variant="outlined" style={{ "margin": "10px", backgroundColor: "yellow" }} key={user.name} className="">
-
-
-                        <AccordionSummary>
-                            <UserProfileCard user={user} aggregateData={aggregateData} />
-
-                        </AccordionSummary>
-                        <AccordionDetails>
-
-
-                            <List className="">
-                                <ListItem>
-                                    <ListItemIcon><ChildFriendly /></ListItemIcon>
-                                    <ListItemText primary={`First Message: ${firstMessageDate}`} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon><Elderly /></ListItemIcon>
-                                    <ListItemText primary={`Last Message: ${lastMessageDate}`} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon><Functions /></ListItemIcon>
-                                    <ListItemText primary={`Total Messages: ${user.totalMessages}`} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon><Calculate /></ListItemIcon>
-                                    <ListItemText primary={`Average Message Length: ${user.avgMessageLength}`} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon><SquareFoot /></ListItemIcon>
-                                    <ListItemText primary={`Longest Message: ${user.longestMessage}`} />
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemIcon><EventAvailable /></ListItemIcon>
-                                    <ListItemText primary={`Active Days: ${user.activeDays}`} />
-                                </ListItem>
-                            </List>
-                        </AccordionDetails>
-
-
-                    </Accordion>
+                    <UserProfileCard className="user-card" user={user} aggregateData={aggregateData} />
                 )
             })}
         </div>

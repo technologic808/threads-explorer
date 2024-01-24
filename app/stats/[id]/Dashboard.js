@@ -1,6 +1,7 @@
 'use client'
 import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Accordion, AccordionSummary, AccordionDetails, Divider } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
+import { green, blue, orange, yellow, pink } from '@mui/material/colors';
 import { Box, ThemeProvider } from '@mui/system';
 import { createTheme } from "@mui/material/styles";
 import './dashboard.css';
@@ -29,6 +30,11 @@ const theme = createTheme({
         },
     },
 });
+
+function getRandomColor() {
+    const colors = [green, blue, orange, yellow, pink]
+    return colors[Math.floor(Math.random() * colors.length)];
+}
 
 function calculateDaysBetween(date1, date2) {
     // Subtract the two dates and get the difference in milliseconds
@@ -211,7 +217,9 @@ function UserProfileCard({ user, aggregateData }) {
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', fontSize: 24 }}>
-                    <Avatar>{getEmoji(user.name)}</Avatar>
+
+
+                    <Avatar sx={{ bgcolor: getRandomColor()[500] }}>{getEmoji(user.name)}</Avatar>
                     <Box sx={{ marginLeft: 1 }}>{removeTilde(user.name)}</Box>
                 </Box>
                 <Box>⠀</Box>

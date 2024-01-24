@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Accordion, AccordionSummary, AccordionDetails, Divider } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
 import { Box, ThemeProvider } from '@mui/system';
 import { createTheme } from "@mui/material/styles";
@@ -70,9 +70,9 @@ function GroupCard({ aggregateData }) {
             className="user-card"
             sx={{
                 bgcolor: 'background.paper',
-                boxShadow: 1,
-                borderRadius: 2,
-                p: 2,
+                boxShadow: 5,
+                borderRadius: 3,
+                p: 3,
                 minWidth: '95vw',
                 marginLeft: '20px',
                 marginRight: '20px',
@@ -208,19 +208,20 @@ function UserProfileCard({ user, aggregateData }) {
                 className="user-card"
                 sx={{
                     bgcolor: 'background.paper',
-                    boxShadow: 1,
-                    borderRadius: 2,
-                    p: 2,
+                    boxShadow: 5,
+                    borderRadius: 3,
+                    p: 3,
                     minWidth: '95vw',
                     marginLeft: '20px',
-                    marginRight: '20px',
+                    marginRight: '10px',
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', fontSize: 20 }}>
                     <Avatar>{getEmoji(user.name)}</Avatar>
                     <Box sx={{ marginLeft: 1 }}>{removeTilde(user.name)}</Box>
                 </Box>
-                <Box sx={{ color: 'text.primary', fontSize: 30, fontWeight: 'medium' }}>
+                <Box>⠀</Box>
+                <Box sx={{ color: 'text.primary', fontSize: 20, fontWeight: 'medium' }}>
                     {user.totalMessages.toLocaleString()} / {aggregateData.totalMessages.toLocaleString()} messages
                 </Box>
                 <Box
@@ -252,8 +253,13 @@ function UserProfileCard({ user, aggregateData }) {
                 >
                     {describeUserActivity(user.activeDays, aggregateData.daysBetween)}
                 </Box>
+                <Box>⠀</Box>
                 <Box
-                    sx={{ color: 'text.secondary', display: 'inline', fontSize: 12 }}
+                    sx={{
+                        color: 'text.secondary',
+                        display: 'inline',
+                        fontSize: 12,
+                    }}
                 >
                     <p><ChildFriendly />{`  >  `}{`First Message: ${firstMessageDate}`}</p>
                     <p><Elderly />{`  >  `}{`Last Message: ${lastMessageDate}`}</p>

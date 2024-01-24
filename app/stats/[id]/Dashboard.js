@@ -168,8 +168,7 @@ function Dashboard({ dashboardData }) {
         </div>
     );
 
-    const renderCharts = () => chartsData.map(chart => renderBarChart(chart.data, chart.label, chart.emoji, chart.color));
-
+    const renderCharts = () => chartsData.map(chart => renderBarChart(chart.data.slice(0, 5), chart.label, chart.emoji, chart.color));
 
     return (
         <>
@@ -229,6 +228,8 @@ function UserCards({ data: users, aggregateData }) {
 
     // sort users array by total messages sent
     users.sort((a, b) => b.totalMessages - a.totalMessages);
+
+    users = users.slice(0, 10);
 
     return (
         <div style={{ backgroundColor: "lightseagreen" }}>

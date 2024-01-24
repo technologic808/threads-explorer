@@ -1,9 +1,11 @@
 'use client'
 import { Card, CardContent, Typography, Avatar, List, ListItem, ListItemIcon, ListItemText, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { BarChart } from "@mui/x-charts";
-import { Box, ThemeProvider, createTheme } from '@mui/system';
+import { Box, ThemeProvider } from '@mui/system';
+import { createTheme } from "@mui/material/styles";
 import './dashboard.css';
-import { Calculate, ChildFriendly, Elderly, EventAvailable, Functions, SquareFoot } from "@mui/icons-material";
+import { Calculate, ChildFriendly, Elderly, EventAvailable, Functions, Group, SquareFoot } from "@mui/icons-material";
+import useEmoji from '../../hooks/useEmoji';
 
 const theme = createTheme({
     palette: {
@@ -18,26 +20,163 @@ const theme = createTheme({
             active: '#001E3C',
         },
         success: {
+            main: '#009688', // Add this line
             dark: '#009688',
         },
         failure: {
+            main: '#E53935', // Add this line
             dark: '#E53935',
         },
     },
 });
 
+function calculateDaysBetween(date1, date2) {
+    // Subtract the two dates and get the difference in milliseconds
+    var differenceInMilliseconds = Math.abs(new Date(date2) - new Date(date1));
+
+    // Convert the difference from milliseconds to days
+    var differenceInDays = Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+
+    return differenceInDays;
+}
+
+function removeTilde(str) {
+    if (str.startsWith("~")) {
+        return str.substring(1);
+    }
+    return str;
+}
+
+
+function GroupCard({ aggregateData }) {
+
+    let firstGroupMessageDate, lastGroupMessageDate;
+
+    aggregateData.userData.forEach(user => {
+        const userFirstDate = new Date(user.firstMessageDate);
+        const userLastDate = new Date(user.lastMessageDate);
+        if (!firstGroupMessageDate || userFirstDate < firstGroupMessageDate) {
+            firstGroupMessageDate = userFirstDate;
+        }
+        if (!lastGroupMessageDate || userLastDate > lastGroupMessageDate) {
+            lastGroupMessageDate = userLastDate;
+        }
+    });
+
+
+
+    return <ThemeProvider theme={theme}>
+        <Box
+            className="user-card"
+            sx={{
+                bgcolor: 'background.paper',
+                boxShadow: 1,
+                borderRadius: 2,
+                p: 2,
+                minWidth: '95vw',
+                marginLeft: '20px',
+                marginRight: '20px',
+            }}
+        >
+
+
+            <Box sx={{ color: 'text.primary', fontSize: 20, fontWeight: 'medium' }}>
+
+            </Box>
+            <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
+                {aggregateData.totalMessages.toLocaleString()} total messages
+            </Box>
+
+
+            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+                First message sent on
+            </Box>
+            <Box
+                sx={{
+                    color: 'success.dark',
+                    display: 'inline',
+                    fontWeight: 'bold',
+                    mx: 0.5,
+                    fontSize: 14,
+                }}
+            >
+                {
+                    new Date(firstGroupMessageDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    })
+                }
+
+            </Box>
+
+
+            <br />
+
+            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+                Active for
+            </Box>
+            <Box
+                sx={{
+                    color: 'success.dark',
+                    display: 'inline',
+                    fontWeight: 'bold',
+                    mx: 0.5,
+                    fontSize: 14,
+                }}
+            >
+                {aggregateData.activeDays.toLocaleString()} days
+
+            </Box>
+
+            <br />
+
+            <Box
+                sx={{
+                    color: 'success.dark',
+                    display: 'inline',
+                    fontWeight: 'bold',
+                    mx: 0.5,
+                    fontSize: 14,
+                }}
+            >
+                {calculateDaysBetween(lastGroupMessageDate, new Date())} days
+
+            </Box>
+            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+                since last message
+            </Box>
+            <br />
+
+
+            <Box
+                sx={{ color: 'text.secondary', display: 'inline', fontSize: 12 }}
+            >
+
+            </Box>
+
+
+        </Box>
+
+    </ThemeProvider>
+}
+
 function UserProfileCard({ user, aggregateData }) {
+
+    const emojis = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🐸', '🐵'];
+    const { getEmoji } = useEmoji(emojis);
+
 
     const firstMessageDate = new Date(user.firstMessageDate).toLocaleString("en-US", {
         year: "numeric",
-        month: "long",
+        month: "short",
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
     });
     const lastMessageDate = new Date(user.lastMessageDate).toLocaleString("en-US", {
         year: "numeric",
-        month: "long",
+        month: "short",
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
@@ -77,9 +216,12 @@ function UserProfileCard({ user, aggregateData }) {
                     marginRight: '20px',
                 }}
             >
-                <Box sx={{ color: 'text.secondary' }}>{user.name}</Box>
-                <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-                    {user.totalMessages} / {aggregateData.totalMessages} messages
+                <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', fontSize: 20 }}>
+                    <Avatar>{getEmoji(user.name)}</Avatar>
+                    <Box sx={{ marginLeft: 1 }}>{removeTilde(user.name)}</Box>
+                </Box>
+                <Box sx={{ color: 'text.primary', fontSize: 30, fontWeight: 'medium' }}>
+                    {user.totalMessages.toLocaleString()} / {aggregateData.totalMessages.toLocaleString()} messages
                 </Box>
                 <Box
                     sx={{
@@ -115,9 +257,9 @@ function UserProfileCard({ user, aggregateData }) {
                 >
                     <p><ChildFriendly />{`  >  `}{`First Message: ${firstMessageDate}`}</p>
                     <p><Elderly />{`  >  `}{`Last Message: ${lastMessageDate}`}</p>
-                    <p><Functions />{`  >  `}{`Total Messages: ${user.totalMessages}`}</p>
+                    <p><Functions />{`  >  `}{`Messages Sent: ${user.totalMessages.toLocaleString()}`}</p>
                     <p><Calculate />{`  >  `}{`Average Message Length: ${user.avgMessageLength}`}</p>
-                    <p><SquareFoot />{`  >  `}{`Longest Message: ${user.longestMessage}`}</p>
+                    <p><SquareFoot />{`  >  `}{`Longest Message: ${user.longestMessage.toLocaleString()} characters`}</p>
                     <p><EventAvailable />{`  >  `}{`Active Days: ${user.activeDays}`}</p>
                 </Box>
 
@@ -167,7 +309,9 @@ function Dashboard({ dashboardData }) {
         data: activeDaysData,
         emoji: "📅",
         color: '#76b7b2'
-    }];
+        }];
+
+    const userData = transformData(dashboardData);
 
     // Create aggregate data for comparison. e.g total messages in the group, etc. 
     const aggregateData = {
@@ -175,6 +319,7 @@ function Dashboard({ dashboardData }) {
         averageMessageLength: averageMessageLengthData.reduce((acc, curr) => acc + curr.value, 0) / averageMessageLengthData.length,
         longestMessage: longestMessageData.reduce((acc, curr) => acc.value > curr.value ? acc : curr).value,
         activeDays: activeDaysData.reduce((acc, curr) => acc + curr.value, 0),
+        userData: userData
     };
 
     // Helper function to render BarCharts
@@ -202,8 +347,9 @@ function Dashboard({ dashboardData }) {
     return (
         <div className="stats-section">
             <Typography variant='h1' className="stats-header">Stats Explorer</Typography>
+            <GroupCard aggregateData={aggregateData} />
             {renderCharts()}
-            <UserCards data={transformData(dashboardData)} aggregateData={aggregateData} />
+            <UserCards data={userData} aggregateData={aggregateData} />
         </div>
     );
 }

@@ -20,13 +20,7 @@
 
 /* .MuiAccordionSummary-root.Mui-expanded */
 
-@media screen and (min-width: 600px) {
-    .container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
+
 
 .container{
     padding-bottom: 0px !important;
@@ -37,4 +31,23 @@
     bottom: 20px;
     right: 20px;
     z-index: 100;
+}
+
+@media (min-width: 768px) { /* Adjust 768px based on your breakpoint for desktop */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Add this line */
+    }
+    .user-card {
+        width: 800px ;
+    }
+    .chart-container{
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Add this line */
+    }
 }

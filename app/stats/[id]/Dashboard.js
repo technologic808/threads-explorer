@@ -109,14 +109,14 @@ function GroupCard({ aggregateData }) {
     const [firstGroupMessageDate, lastGroupMessageDate] = getFirstandLastGroupMessageDate(aggregateData);
 
     const customStyles = {
-        defaultCard: { bgcolor: 'background.paper', boxShadow: 5, borderRadius: 3, p: 3, },
+        defaultCard: { bgcolor: 'background.paper', boxShadow: 5, borderRadius: 3, p: 3, maxWidth: 400 },
         loudText: { color: 'text.primary', fontSize: 34, fontWeight: 'medium' },
         normalText: { color: 'text.secondary', display: 'inline', fontSize: 16 },
         highlightedText: { color: 'success.dark', display: 'inline', fontWeight: 'bold', mx: 0.5, fontSize: 16 },
     }
 
     return <ThemeProvider theme={theme}>
-        <Box className="user-card" sx={customStyles.defaultCard}>
+        <Box className="user-card " sx={customStyles.defaultCard}>
 
             <Box sx={customStyles.loudText}>
                 {aggregateData.totalMessages.toLocaleString()} messages
@@ -167,9 +167,9 @@ function UserProfileCard({ user, aggregateData }) {
     const percentTotalMessages = (user.totalMessages / aggregateData.totalMessages) * 100;
 
     const customStyles = {
-        defaultCard: { bgcolor: 'background.paper', boxShadow: 5, borderRadius: 3, p: 3, },
+        defaultCard: { bgcolor: 'background.paper', boxShadow: 5, borderRadius: 3, p: 3, maxWidth: 900, },
         loudText: { color: 'text.primary', fontSize: 34, fontWeight: 'medium' },
-        mediumText: { color: 'text.secondary', display: 'inline', fontSize: 20 },
+        mediumText: { color: 'text.secondary', display: 'inline', fontSize: 20, mr: 0 },
         normalText: { color: 'text.secondary', display: 'inline', fontSize: 16 },
         highlightedText: { color: 'success.dark', display: 'inline', fontWeight: 'bold', mx: 0.5, fontSize: 16 },
         highlightedLoudText: { color: 'success.dark', display: 'inline', fontWeight: 'bold', mx: 0.5, fontSize: 24 },
@@ -177,51 +177,79 @@ function UserProfileCard({ user, aggregateData }) {
         avatar: { bgcolor: getRandomColor()[500] },
         username: { marginLeft: 1 },
         smallText: { color: 'text.secondary', display: 'inline', fontSize: 14 },
+        flexContainer: {
+            display: 'flex',
+            flexDirection: 'column', // Stacks children vertically on small screens
+            '@media (min-width: 768px)': { // Adjust as per your breakpoint for desktop
+                flexDirection: 'row', // Lays out children horizontally on large screens
+            },
+        },
+        leftContent: {
+            flex: 1, // Takes up remaining space after allocating to rightContent
+            '@media (min-width: 768px)': {
+                marginRight: '20px', // Adds some space between the left and right sections
+            },
+        },
+        rightContent: {
+            width: '100%', // Full width on small screens
+            '@media (min-width: 768px)': {
+                width: '350px', // Fixed width for the right box on large screens
+                marginLeft: '50px', // Adds some space between the left and right sections
+            },
+
+        },
 
     }
 
     return (
         <ThemeProvider theme={theme}>
+
             <Box className="user-card" sx={customStyles.defaultCard}>
-                <Box sx={customStyles.userProfile}>
-                    <Avatar sx={customStyles.avatar}>{getEmoji(user.name)}</Avatar>
-                    <Box sx={customStyles.username}>{removeTilde(user.name)}</Box>
+                <Box sx={customStyles.flexContainer}>
+                    <Box sx={customStyles.leftContent}>
+                        <Box sx={customStyles.userProfile}>
+                            <Avatar sx={customStyles.avatar}>{getEmoji(user.name)}</Avatar>
+                            <Box sx={customStyles.username}>{removeTilde(user.name)}</Box>
+                        </Box>
+
+                        <Box>⠀</Box>
+
+                        <Box
+                            sx={customStyles.highlightedLoudText}
+                        >
+                            {percentTotalMessages.toFixed(2)}%
+                        </Box>
+
+                        <Box sx={customStyles.mediumText}>
+                            of total messages
+                        </Box>
+                        <br />
+
+                        <Box sx={customStyles.normalText}>
+                            Active for
+                        </Box>
+
+                        <Box sx={customStyles.highlightedText}>
+                            {describeUserActivity(user.activeDays, aggregateData.daysBetween)}
+                        </Box>
+
+                        <Box>⠀</Box>
+                    </Box>
+                    <Box sx={customStyles.rightContent}>
+                        <Box sx={customStyles.smallText}>
+                            <p><ChildFriendly />{`  >  `}{`First Message: ${firstMessageDate}`}</p>
+                            <p><Elderly />{`  >  `}{`Last Message: ${lastMessageDate}`}</p>
+                            <p><Functions />{`  >  `}{`Messages Sent: ${user.totalMessages.toLocaleString()} / ${aggregateData.totalMessages.toLocaleString()}`}</p>
+                            <p><Calculate />{`  >  `}{`Average Message: ${Math.floor(user.avgMessageLength)}`} characters</p>
+                            <p><SquareFoot />{`  >  `}{`Longest Message: ${user.longestMessage.toLocaleString()} characters`}</p>
+                            <p><EventAvailable />{`  >  `}{`Active Days: ${user.activeDays}`}</p>
+                        </Box>
+
+                    </Box>
                 </Box>
-
-                <Box>⠀</Box>
-
-                <Box
-                    sx={customStyles.highlightedLoudText}
-                >
-                    {percentTotalMessages.toFixed(2)}%
-                </Box>
-
-                <Box sx={customStyles.mediumText}>
-                    of total messages sent
-                </Box>
-                <br />
-
-                <Box sx={customStyles.normalText}>
-                    Group activity :
-                </Box>
-
-                <Box sx={customStyles.highlightedText}>
-                    {describeUserActivity(user.activeDays, aggregateData.daysBetween)}
-                </Box>
-
-                <Box>⠀</Box>
-
-                <Box sx={customStyles.smallText}>
-                    <p><ChildFriendly />{`  >  `}{`First Message: ${firstMessageDate}`}</p>
-                    <p><Elderly />{`  >  `}{`Last Message: ${lastMessageDate}`}</p>
-                    <p><Functions />{`  >  `}{`Messages Sent: ${user.totalMessages.toLocaleString()} / ${aggregateData.totalMessages.toLocaleString()}`}</p>
-                    <p><Calculate />{`  >  `}{`Average Message: ${Math.floor(user.avgMessageLength)}`} characters</p>
-                    <p><SquareFoot />{`  >  `}{`Longest Message: ${user.longestMessage.toLocaleString()} characters`}</p>
-                    <p><EventAvailable />{`  >  `}{`Active Days: ${user.activeDays}`}</p>
-                </Box>
-
 
             </Box>
+
 
         </ThemeProvider>
     );
@@ -269,7 +297,7 @@ function Dashboard({ dashboardData }) {
     const valueFormatter = (value) => `${value}`;
 
     const chartSetting = {
-        width: window.innerWidth,
+        width: 400,
         height: 300,
     };
 
@@ -288,7 +316,7 @@ function Dashboard({ dashboardData }) {
             color: '#4e79a7'
         },
         {
-            label: 'Average Message Length',
+            label: 'Average Message',
             data: averageMessageLengthData,
             emoji: "📏",
             color: '#f28e2c'
@@ -327,7 +355,7 @@ function Dashboard({ dashboardData }) {
 
     // Helper function to render BarCharts
     const renderBarChart = (data, title, emoji, color) => (
-        <div className="container" key={title}>
+        <div className="chart" key={title}>
             <Typography variant='h4' style={{ padding: 20, width: 400 }}>{emoji} {title}</Typography>
             <BarChart
                 dataset={data}
@@ -352,10 +380,13 @@ function Dashboard({ dashboardData }) {
     };
 
     return (
-        <div className="stats-section">
+
+        <div className="stats-section ">
             <Typography variant='h2' className="stats-header">🔍 Stats Explorer</Typography>
             <GroupCard aggregateData={aggregateData} />
+            <div className=" chart-container">
             {renderCharts()}
+            </div>
             <UserCards data={userData} aggregateData={aggregateData} />
             <ScrollTop />
         </div>
@@ -403,9 +434,12 @@ function UserCards({ data: users, aggregateData }) {
 
     return (
         <div className="user-section">
+
             <Typography variant='h2' style={{ padding: "30px", backgroundColor: "#e9ff98" }}>🃏 User Cards</Typography>
+            <div className=" main-container">
 
             {users.map((user) => (<UserProfileCard key={user.name} className="user-card" user={user} aggregateData={aggregateData} />))}
+            </div>
         </div>
     );
 };

@@ -401,7 +401,7 @@ function UserCards({ data: users, aggregateData }) {
     // sort users array by total messages sent
     users.sort((a, b) => b.totalMessages - a.totalMessages);
 
-    users = users.slice(0, 10);
+    users = users.slice(0, 25);
 
     return (
         <div className="user-section">

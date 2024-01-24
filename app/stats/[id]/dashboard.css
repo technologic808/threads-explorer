@@ -1,5 +1,6 @@
 .user-card {
    margin: 20px ;
+   margin-right: 20px !important;
 }
 
 .user-section{
@@ -10,6 +11,7 @@
 .stats-header{
     background-color: #e9ff98;
     margin: 10px;
+    padding:20px
 }
 
 .stats-section{
@@ -17,3 +19,9 @@
 }
 
 /* .MuiAccordionSummary-root.Mui-expanded */
+
+@media screen and (max-width: 600px) {
+    .container {
+      flex-direction: column;
+    }
+  }

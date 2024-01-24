@@ -73,9 +73,6 @@ function GroupCard({ aggregateData }) {
                 boxShadow: 5,
                 borderRadius: 3,
                 p: 3,
-                minWidth: '95vw',
-                marginLeft: '20px',
-                marginRight: '20px',
             }}
         >
 
@@ -84,11 +81,11 @@ function GroupCard({ aggregateData }) {
 
             </Box>
             <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
-                {aggregateData.totalMessages.toLocaleString()} total messages
+                {aggregateData.totalMessages.toLocaleString()} messages
             </Box>
 
 
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 16 }}>
                 First message sent on
             </Box>
             <Box
@@ -97,7 +94,7 @@ function GroupCard({ aggregateData }) {
                     display: 'inline',
                     fontWeight: 'bold',
                     mx: 0.5,
-                    fontSize: 14,
+                    fontSize: 16,
                 }}
             >
                 {
@@ -113,7 +110,7 @@ function GroupCard({ aggregateData }) {
 
             <br />
 
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 16 }}>
                 Active for
             </Box>
             <Box
@@ -122,7 +119,7 @@ function GroupCard({ aggregateData }) {
                     display: 'inline',
                     fontWeight: 'bold',
                     mx: 0.5,
-                    fontSize: 14,
+                    fontSize: 16,
                 }}
             >
                 {aggregateData.activeDays.toLocaleString()} days
@@ -137,13 +134,13 @@ function GroupCard({ aggregateData }) {
                     display: 'inline',
                     fontWeight: 'bold',
                     mx: 0.5,
-                    fontSize: 14,
+                    fontSize: 16,
                 }}
             >
                 {calculateDaysBetween(lastGroupMessageDate, new Date())} days
 
             </Box>
-            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+            <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 16 }}>
                 since last message
             </Box>
             <br />
@@ -211,35 +208,29 @@ function UserProfileCard({ user, aggregateData }) {
                     boxShadow: 5,
                     borderRadius: 3,
                     p: 3,
-                    minWidth: '95vw',
-                    marginLeft: '20px',
-                    marginRight: '10px',
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', fontSize: 20 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', fontSize: 24 }}>
                     <Avatar>{getEmoji(user.name)}</Avatar>
                     <Box sx={{ marginLeft: 1 }}>{removeTilde(user.name)}</Box>
                 </Box>
                 <Box>⠀</Box>
-                <Box sx={{ color: 'text.primary', fontSize: 20, fontWeight: 'medium' }}>
-                    {user.totalMessages.toLocaleString()} / {aggregateData.totalMessages.toLocaleString()} messages
-                </Box>
                 <Box
                     sx={{
                         color: 'success.dark',
                         display: 'inline',
                         fontWeight: 'bold',
                         mx: 0.5,
-                        fontSize: 14,
+                        fontSize: 24,
                     }}
                 >
                     {percentTotalMessages.toFixed(2)}%
                 </Box>
-                <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
-                    of total messages sent.
+                <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 20 }}>
+                    of total messages sent
                 </Box>
                 <br />
-                <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 14 }}>
+                <Box sx={{ color: 'text.secondary', display: 'inline', fontSize: 16 }}>
                     Group activity :
                 </Box>
                 <Box
@@ -248,7 +239,7 @@ function UserProfileCard({ user, aggregateData }) {
                         display: 'inline',
                         fontWeight: 'bold',
                         mx: 0.5,
-                        fontSize: 14,
+                        fontSize: 16,
                     }}
                 >
                     {describeUserActivity(user.activeDays, aggregateData.daysBetween)}
@@ -258,12 +249,12 @@ function UserProfileCard({ user, aggregateData }) {
                     sx={{
                         color: 'text.secondary',
                         display: 'inline',
-                        fontSize: 12,
+                        fontSize: 14,
                     }}
                 >
                     <p><ChildFriendly />{`  >  `}{`First Message: ${firstMessageDate}`}</p>
                     <p><Elderly />{`  >  `}{`Last Message: ${lastMessageDate}`}</p>
-                    <p><Functions />{`  >  `}{`Messages Sent: ${user.totalMessages.toLocaleString()}`}</p>
+                    <p><Functions />{`  >  `}{`Messages Sent: ${user.totalMessages.toLocaleString()} / ${aggregateData.totalMessages.toLocaleString()}`}</p>
                     <p><Calculate />{`  >  `}{`Average Message Length: ${user.avgMessageLength}`}</p>
                     <p><SquareFoot />{`  >  `}{`Longest Message: ${user.longestMessage.toLocaleString()} characters`}</p>
                     <p><EventAvailable />{`  >  `}{`Active Days: ${user.activeDays}`}</p>
@@ -331,7 +322,7 @@ function Dashboard({ dashboardData }) {
     // Helper function to render BarCharts
     const renderBarChart = (data, title, emoji, color) => (
         <div style={{ padding: "20px" }}>
-            <Typography variant='h2' style={{ "margin": "20px" }}>{emoji} {title}</Typography>
+            <Typography variant='h3' style={{ "margin": "20px" }}>{emoji} {title}</Typography>
             <BarChart
                 dataset={data}
                 xAxis={[{ scaleType: 'band', dataKey: 'label' }]}
@@ -352,7 +343,7 @@ function Dashboard({ dashboardData }) {
 
     return (
         <div className="stats-section">
-            <Typography variant='h1' className="stats-header">Stats Explorer</Typography>
+            <Typography variant='h2' className="stats-header">🔍 Stats Explorer</Typography>
             <GroupCard aggregateData={aggregateData} />
             {renderCharts()}
             <UserCards data={userData} aggregateData={aggregateData} />
@@ -414,7 +405,7 @@ function UserCards({ data: users, aggregateData }) {
 
     return (
         <div className="user-section">
-            <Typography variant='h1' style={{ padding: "30px" }}>🃏 User Cards</Typography>
+            <Typography variant='h2' style={{ padding: "30px", backgroundColor: "#e9ff98" }}>🃏 User Cards</Typography>
 
             {users.map((user) => {
 

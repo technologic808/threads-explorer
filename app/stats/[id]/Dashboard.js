@@ -133,11 +133,11 @@ function GroupCard({ aggregateData }) {
             <br />
 
             <Box sx={customStyles.normalText}>
-                Active for
+                Messages spanning over
             </Box>
 
             <Box sx={customStyles.highlightedText} >
-                {aggregateData.activeDays.toLocaleString()} days
+                {calculateDaysBetween(firstGroupMessageDate, lastGroupMessageDate)} days
             </Box>
 
             <br />
@@ -346,7 +346,6 @@ function Dashboard({ dashboardData }) {
         totalMessages: totalMessagesData.reduce((acc, curr) => acc + curr.value, 0),
         averageMessageLength: averageMessageLengthData.reduce((acc, curr) => acc + curr.value, 0) / averageMessageLengthData.length,
         longestMessage: longestMessageData.reduce((acc, curr) => acc.value > curr.value ? acc : curr).value,
-        activeDays: activeDaysData.reduce((acc, curr) => acc + curr.value, 0),
         daysBetween: Math.ceil((lastMessageDate - firstMessageDate) / (1000 * 60 * 60 * 24)),
         userData: userData
     };

@@ -137,7 +137,7 @@ function GroupCard({ aggregateData }) {
             </Box>
 
             <Box sx={customStyles.highlightedText} >
-                {calculateDaysBetween(firstGroupMessageDate, lastGroupMessageDate)} days
+                {calculateDaysBetween(firstGroupMessageDate, lastGroupMessageDate).toLocaleString()} days
             </Box>
 
             <br />

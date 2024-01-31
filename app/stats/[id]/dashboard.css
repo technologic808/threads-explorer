@@ -1,0 +1,53 @@
+.user-card {
+   margin: 20px ;
+   margin-right: 20px !important;
+}
+
+.user-section{
+    background-color: #f5f5f5;
+    padding-bottom: 10px;
+}
+
+.stats-header{
+    background-color: #e9ff98;
+    margin: 10px;
+    padding:20px
+}
+
+.stats-section{
+    background-color: #f5f5f5;
+}
+
+/* .MuiAccordionSummary-root.Mui-expanded */
+
+
+
+.container{
+    padding-bottom: 0px !important;
+}
+
+.fab {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+@media (min-width: 768px) { /* Adjust 768px based on your breakpoint for desktop */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Add this line */
+    }
+    .user-card {
+        width: 800px ;
+    }
+    .chart-container{
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap; /* Add this line */
+    }
+}
